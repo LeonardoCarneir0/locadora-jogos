@@ -52,6 +52,9 @@ java -cp out locadora.Main
 
 ## 🧩 Padrões de projeto aplicados
 
+> 📄 A classificação detalhada (Classe A e Classe A/B) e a justificativa de
+> cada padrão estão em **[PADROES.md](PADROES.md)**.
+
 | # | Padrão | Categoria | Classe | Pasta | O que faz |
 |---|--------|-----------|:------:|-------|-----------|
 | 1 | **Factory Method** | Criacional | A | `fabrica/` | Cria jogos físicos/digitais |
