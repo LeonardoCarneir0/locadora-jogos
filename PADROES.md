@@ -1,4 +1,4 @@
-# 🧩 Classificação dos Padrões — Classe A e Classe A/B
+# 🧩 Classificação dos Padrões — Classe A e Classe B
 
 Este documento mostra como o sistema **Locadora de Jogos** atende à regra do
 projeto:
@@ -15,7 +15,6 @@ projeto:
 |--------|:------:|-----------------|-------|------------------|
 | **Factory Method** | **A** | Criacional | `fabrica/` | Cria jogos físicos ou digitais |
 | **State** | **A** | Comportamental | `estado/` | Ciclo de vida do aluguel |
-| **Observer** | **A** | Comportamental | `observador/` | Atualiza as telas automaticamente |
 | **Decorator** | **B** | Estrutural | `contrato/` | Adiciona extras ao aluguel |
 | **Proxy** | **B** | Estrutural | `servico/` | Bloqueia jogos +18 para menores |
 
@@ -26,13 +25,8 @@ projeto:
 - **Classe A (obrigatórios):** `Factory Method` + `State` ✅
 - **Classe A/B (livres):** `Decorator` + `Proxy` ✅
 
-**Resultado:** **3 padrões da Classe A + 2 padrões da Classe B** → atende e
-**supera** o mínimo exigido (2 da A + 2 da A/B). O `Observer` entra como padrão
-extra de interface (usado pelo MVC).
-
-> Se a dupla quiser apresentar exatamente **2 + 2**, basta destacar os quatro
-> "oficiais": **Factory Method (A) + State (A) + Decorator (B) + Proxy (B)**.
-> O Observer fica como bônus, ligado à interface gráfica.
+**Resultado:** **2 padrões da Classe A + 2 padrões da Classe B** → atende
+**exatamente** ao que o projeto pede.
 
 ---
 
@@ -44,9 +38,9 @@ extra de interface (usado pelo MVC).
 - **Como funciona:** o método `fabricar(DadosJogo)` é implementado por cada
   fábrica, que decide qual subclasse de `Jogo` instanciar (`JogoFisico` ou
   `JogoDigital`).
-- **Por que está "completo":** o código cliente (`CadastroJogoDialog`) não usa
-  `new` diretamente; para criar um novo tipo de jogo basta adicionar uma nova
-  fábrica, **sem alterar o código existente**.
+- **Por que está "completo":** o código cliente (`Main`) não usa `new`
+  diretamente para criar jogos; para criar um novo tipo basta adicionar uma
+  nova fábrica, **sem alterar o código existente**.
 
 ### 2. State — Classe A
 - **Onde:** `EstadoAluguel` (interface) + `EstadoAlugado`, `EstadoAtrasado` e
@@ -56,15 +50,7 @@ extra de interface (usado pelo MVC).
 - **Por que está "completo":** o ciclo inteiro é modelado:
   `ALUGADO → ATRASADO → DEVOLVIDO`, com multa na devolução atrasada.
 
-### 3. Observer — Classe A (extra de interface)
-- **Onde:** `ObservadorLocadora` (interface) + os painéis da UI. Subject:
-  `Locadora`.
-- **Como funciona:** a `Locadora` mantém uma lista de observadores e chama
-  `atualizar()` em todos quando o catálogo ou os aluguéis mudam.
-- **Por que está "completo":** as três abas (Catálogo, Alugar, Aluguéis) se
-  atualizam sozinhas, sem botão de recarregar.
-
-### 4. Decorator — Classe B
+### 3. Decorator — Classe B
 - **Onde:** `Contrato` (interface) + `ContratoBasico` (componente) +
   `DecoradorContrato` (abstrato) + `ExtraSegundoControle`, `ExtraSeguro` e
   `ExtraEntrega`.
@@ -73,7 +59,7 @@ extra de interface (usado pelo MVC).
 - **Por que está "completo":** o preço final é montado em tempo de execução,
   sem alterar a classe `Aluguel`.
 
-### 5. Proxy — Classe B
+### 4. Proxy — Classe B
 - **Onde:** `ServicoLocadora` (interface) + `Locadora` (Real Subject) +
   `LocadoraProxy` (Proxy).
 - **Como funciona:** o Proxy intercepta a chamada `alugar(...)`, verifica a
@@ -84,23 +70,10 @@ extra de interface (usado pelo MVC).
 
 ---
 
-## 🏗️ Padrão extra de interface: MVC
-
-Além dos padrões acima, a interface gráfica segue o **MVC**:
-
-| Camada | Onde |
-|--------|------|
-| **Model** | `modelo/`, `fabrica/`, `estado/`, `contrato/`, `servico/` |
-| **View** | `ui/*Panel`, `ui/MainWindow` |
-| **Controller** | listeners de botão + `LocadoraProxy` |
-
----
-
 ## 📊 Resumo para a apresentação
 
 | Requisito | Situação |
 |-----------|----------|
-| 2 padrões da Classe A | ✅ Factory Method + State (+ Observer) |
+| 2 padrões da Classe A | ✅ Factory Method + State |
 | 2 padrões da Classe A ou B | ✅ Decorator + Proxy |
-| Padrões completos | ✅ 5 padrões implementados |
-| Interface (bônus) | ✅ Swing com MVC + Observer |
+| Padrões completos | ✅ 4 padrões implementados |

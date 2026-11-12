@@ -11,7 +11,6 @@ elif command -v javac >/dev/null 2>&1; then
 elif [ -x "$HOME/.sdkman/candidates/java/current/bin/javac" ]; then
     JAVA_BIN="$HOME/.sdkman/candidates/java/current/bin"
 else
-    # Procura um JDK instalado em /usr/lib/jvm
     JAVA_BIN="$(find /usr/lib/jvm -name javac -type f 2>/dev/null | head -n1 | xargs dirname 2>/dev/null)"
 fi
 
@@ -25,5 +24,5 @@ echo "Usando JDK: $JAVA_BIN"
 mkdir -p out
 "$JAVA_BIN/javac" -encoding UTF-8 -d out $(find src -name '*.java')
 
-# Interface gráfica (Swing)
-"$JAVA_BIN/java" -cp out locadora.ui.App
+# Versão em console
+"$JAVA_BIN/java" -cp out locadora.Main
