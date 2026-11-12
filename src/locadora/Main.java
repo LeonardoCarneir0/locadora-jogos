@@ -25,7 +25,7 @@ import locadora.servico.ServicoLocadora;
  *  - Factory Method (Classe A): criar jogos físicos/digitais
  *  - State            (Classe A): ciclo de vida do aluguel
  *  - Decorator        (Classe B): extras adicionados ao aluguel
- *  - Proxy            (Classe B): bloqueio de jogos +18 para menores
+ *  - Proxy            (Classe B): bloqueio por classificação indicativa
  */
 public class Main {
 
@@ -35,35 +35,44 @@ public class Main {
 
     public static void main(String[] args) {
         popularDadosIniciais();
+        System.out.println();
+        exibirMenu();
 
-        int opcao;
-        do {
-            exibirMenu();
-            opcao = lerInteiro("Opção: ");
+        while (true) {
+            int opcao = lerInteiro("Opção (0 = opções | 9 = sair): ");
             System.out.println();
+            if (opcao == 9) {
+                System.out.println("Encerrando... Até a próxima!");
+                break;
+            }
             switch (opcao) {
+                case 0 -> exibirMenu();
                 case 1 -> cadastrarJogo();
                 case 2 -> listarJogos();
                 case 3 -> alugarJogo();
                 case 4 -> listarAlugueis();
                 case 5 -> atrasarAluguel();
                 case 6 -> devolverAluguel();
-                case 0 -> System.out.println("Encerrando... Até a próxima!");
-                default -> System.out.println("Opção inválida.");
+                default -> System.out.println("Opção inválida! Digite 0 para ver as opções.");
             }
             System.out.println();
-        } while (opcao != 0);
+            System.out.println("--------------------------------------------------");
+        }
     }
 
     private static void exibirMenu() {
-        System.out.println("============ LOCADORA DE JOGOS ============");
-        System.out.println("1. Cadastrar jogo   (Factory Method)");
-        System.out.println("2. Listar jogos");
-        System.out.println("3. Alugar jogo      (Proxy + Decorator)");
-        System.out.println("4. Listar aluguéis");
-        System.out.println("5. Simular atraso   (State)");
-        System.out.println("6. Devolver jogo    (State)");
-        System.out.println("0. Sair");
+        System.out.println("==================================================");
+        System.out.println("                  LOCADORA DE JOGOS               ");
+        System.out.println("==================================================");
+        System.out.println("  1 - Cadastrar jogo       (Factory Method)");
+        System.out.println("  2 - Listar jogos");
+        System.out.println("  3 - Alugar jogo          (Proxy + Decorator)");
+        System.out.println("  4 - Listar aluguéis");
+        System.out.println("  5 - Simular atraso       (State)");
+        System.out.println("  6 - Devolver jogo        (State)");
+        System.out.println("  0 - Mostrar opções");
+        System.out.println("  9 - Sair");
+        System.out.println("==================================================");
     }
 
     private static void popularDadosIniciais() {

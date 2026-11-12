@@ -28,6 +28,8 @@ vida do aluguel.
 > java -cp out locadora.Main
 > ```
 
+> 💡 No menu: **0** mostra as opções novamente e **9** encerra o programa.
+
 ---
 
 ## 🧩 Padrões de projeto (2 da Classe A + 2 da Classe B)
