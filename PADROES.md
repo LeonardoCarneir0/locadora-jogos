@@ -16,7 +16,7 @@ projeto:
 | **Factory Method** | **A** | Criacional | `fabrica/` | Cria jogos físicos ou digitais |
 | **State** | **A** | Comportamental | `estado/` | Ciclo de vida do aluguel |
 | **Decorator** | **B** | Estrutural | `contrato/` | Adiciona extras ao aluguel |
-| **Proxy** | **B** | Estrutural | `servico/` | Bloqueia jogos +18 para menores |
+| **Proxy** | **B** | Estrutural | `servico/` | Bloqueia jogos acima da idade do cliente |
 
 ---
 
@@ -62,9 +62,10 @@ projeto:
 ### 4. Proxy — Classe B
 - **Onde:** `ServicoLocadora` (interface) + `Locadora` (Real Subject) +
   `LocadoraProxy` (Proxy).
-- **Como funciona:** o Proxy intercepta a chamada `alugar(...)`, verifica a
-  idade do cliente e só delega ao serviço real se o jogo não for +18 para
-  menor de idade.
+- **Como funciona:** o Proxy intercepta a chamada `alugar(...)`, compara a
+  idade do cliente com a **classificação indicativa** do jogo e só delega ao
+  serviço real se a idade for suficiente (ex.: jogo 10+ exige 10 anos ou mais;
+  jogo 18+ exige 18 anos ou mais).
 - **Por que está "completo":** é um Proxy de **controle de acesso**, com a
   mesma interface do serviço real.
 

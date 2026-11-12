@@ -34,11 +34,6 @@ public abstract class Jogo {
         return classificacaoIndicativa;
     }
 
-    /** Usado pelo Proxy para saber se o jogo exige maioridade. */
-    public boolean isAdulto() {
-        return classificacaoIndicativa >= 18;
-    }
-
     public abstract String getTipoMidia();
 
     @Override

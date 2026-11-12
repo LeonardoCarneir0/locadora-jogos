@@ -7,8 +7,10 @@ import locadora.nucleo.Aluguel;
 /**
  * Proxy do padrão Proxy (controle de acesso).
  *
- * Antes de liberar o aluguel, verifica se o jogo é +18 e se o cliente tem
- * idade suficiente. Só então delega ao serviço real ({@link Locadora}).
+ * Antes de liberar o aluguel, compara a idade do cliente com a classificação
+ * indicativa do jogo (ex.: 10+, 12+, 18+). Se o cliente for mais novo que a
+ * classificação, o aluguel é bloqueado. Só então delega ao serviço real
+ * ({@link Locadora}).
  */
 public class LocadoraProxy implements ServicoLocadora {
 
@@ -20,9 +22,9 @@ public class LocadoraProxy implements ServicoLocadora {
 
     @Override
     public Aluguel alugar(String cliente, int idade, Jogo jogo, int dias, Contrato contrato) {
-        if (jogo.isAdulto() && idade < 18) {
-            System.out.printf("   [Proxy] BLOQUEADO: '%s' é +18 e %s tem %d anos.%n",
-                    jogo.getTitulo(), cliente, idade);
+        if (idade < jogo.getClassificacaoIndicativa()) {
+            System.out.printf("   [Proxy] BLOQUEADO: '%s' é %d+ e %s tem %d anos.%n",
+                    jogo.getTitulo(), jogo.getClassificacaoIndicativa(), cliente, idade);
             return null;
         }
         System.out.printf("   [Proxy] Acesso liberado para '%s'.%n", jogo.getTitulo());

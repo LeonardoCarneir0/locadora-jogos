@@ -37,7 +37,7 @@ vida do aluguel.
 | 1 | **Factory Method** | **A** | Criacional | `fabrica/` | Cria jogos físicos/digitais |
 | 2 | **State** | **A** | Comportamental | `estado/` | Ciclo de vida do aluguel |
 | 3 | **Decorator** | **B** | Estrutural | `contrato/` | Adiciona extras ao aluguel |
-| 4 | **Proxy** | **B** | Estrutural | `servico/` | Bloqueia jogos +18 para menores |
+| 4 | **Proxy** | **B** | Estrutural | `servico/` | Bloqueia jogos acima da idade do cliente |
 
 > 📄 A justificativa detalhada de cada padrão está em **[PADROES.md](PADROES.md)**.
 
@@ -68,8 +68,10 @@ ao estado atual — a devolução com atraso, por exemplo, cobra multa.
 somam valores e podem ser **combinados em cadeia**.
 
 **4. Proxy** — `ServicoLocadora` define `alugar(...)`. `Locadora` (Real
-Subject) executa o aluguel; `LocadoraProxy` verifica a **idade** do cliente
-antes de delegar e bloqueia jogos +18 para menores.
+Subject) executa o aluguel; `LocadoraProxy` compara a **idade** do cliente
+com a **classificação indicativa** do jogo e bloqueia se o cliente for mais
+novo (ex.: jogo 10+ para uma criança de 6 anos, ou jogo 18+ para um jovem de
+15 anos).
 
 ---
 
@@ -95,8 +97,9 @@ locadora-jogos/
 ## 🎬 Roteiro de demonstração
 
 1. **Factory Method** — opção `1`: cadastre um jogo físico e um digital.
-2. **Proxy** — opção `3`: tente alugar `GTA VI` (+18) para um cliente de
-   15 anos → o sistema **bloqueia**.
+2. **Proxy** — opção `3`: tente alugar `GTA VI` (18+) para um cliente de
+   15 anos, ou `Minecraft` (10+) para uma criança de 6 anos → o sistema
+   **bloqueia**.
 3. **Decorator** — opção `3`: alugue um jogo escolhendo extras (segundo
    controle, seguro, entrega) → o preço soma os extras.
 4. **State** — opções `5` e `6`: simule atraso e depois devolva → repare na
