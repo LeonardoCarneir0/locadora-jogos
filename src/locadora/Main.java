@@ -35,16 +35,19 @@ public class Main {
 
     public static void main(String[] args) {
         popularDadosIniciais();
-        System.out.println();
+        limparTela();
         exibirMenu();
 
         while (true) {
             int opcao = lerInteiro("Opção (0 = opções | 9 = sair): ");
-            System.out.println();
+
             if (opcao == 9) {
+                limparTela();
                 System.out.println("Encerrando... Até a próxima!");
                 break;
             }
+
+            limparTela();
             switch (opcao) {
                 case 0 -> exibirMenu();
                 case 1 -> cadastrarJogo();
@@ -55,9 +58,32 @@ public class Main {
                 case 6 -> devolverAluguel();
                 default -> System.out.println("Opção inválida! Digite 0 para ver as opções.");
             }
-            System.out.println();
-            System.out.println("--------------------------------------------------");
+
+            if (opcao != 0) {
+                pausar();
+                limparTela();
+                exibirMenu();
+            }
         }
+    }
+
+    /** Limpa a tela do terminal (Linux/macOS) ou do cmd (Windows). */
+    private static void limparTela() {
+        try {
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception ignored) {
+            // Se não for possível limpar, o programa continua normalmente.
+        }
+    }
+
+    private static void pausar() {
+        System.out.print("\nPressione Enter para voltar ao menu...");
+        sc.nextLine();
     }
 
     private static void exibirMenu() {
