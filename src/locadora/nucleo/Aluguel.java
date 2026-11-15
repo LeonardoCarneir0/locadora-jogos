@@ -20,6 +20,8 @@ public class Aluguel {
     private final int dias;
     private final Contrato contrato;
     private EstadoAluguel estado;
+    private int diasAtraso;
+    private double multa;
 
     public Aluguel(String cliente, Jogo jogo, int dias, Contrato contrato) {
         this.cliente = cliente;
@@ -30,7 +32,7 @@ public class Aluguel {
     }
 
     public double calcularPreco() {
-        return contrato.calcularPreco();
+        return contrato.calcularPreco() + multa;
     }
 
     public String getDescricao() {
@@ -64,7 +66,26 @@ public class Aluguel {
     public String getEstado() {
         return estado.getNome();
     }
+    public void atrasar(int diasAtraso) {
+        estado.atrasar(this, diasAtraso);
+    }
 
+    public int getDiasAtraso() {
+        return diasAtraso;
+    }
+
+    public void setDiasAtraso(int diasAtraso) {
+        this.diasAtraso = diasAtraso;
+    }
+
+    public void registrarMulta(double multa) {
+        this.multa = multa;
+    }
+
+    public double getMulta() {
+        return multa;
+    }
+    
     @Override
     public String toString() {
         return String.format("%-12s -> %-22s | %2d dia(s) | %-9s | R$ %6.2f | %s",
