@@ -1,7 +1,6 @@
 package locadora.estado;
 
 import locadora.nucleo.Aluguel;
-
 /**
  * Interface do padrão State.
  *
@@ -12,7 +11,7 @@ public interface EstadoAluguel {
 
     void devolver(Aluguel aluguel);
 
-    void atrasar(Aluguel aluguel);
+    void atrasar(Aluguel aluguel, int diasAtraso);
 
     String getNome();
 }
