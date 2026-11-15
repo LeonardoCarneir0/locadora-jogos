@@ -182,8 +182,13 @@ public class Main {
 
     private static void atrasarAluguel() {
         Aluguel aluguel = selecionarAluguel();
+
         if (aluguel != null) {
-            aluguel.atrasar();
+            int diasAtraso = lerInteiro(
+                "Quantos dias de atraso? "
+            );
+
+            aluguel.atrasar(diasAtraso);
         }
     }
 
