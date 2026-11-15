@@ -1,10 +1,8 @@
+
 package locadora.estado;
 
 import locadora.nucleo.Aluguel;
 
-/**
- * Estado "ALUGADO": o jogo está com o cliente, dentro do prazo.
- */
 public class EstadoAlugado implements EstadoAluguel {
 
     @Override
@@ -14,9 +12,16 @@ public class EstadoAlugado implements EstadoAluguel {
     }
 
     @Override
-    public void atrasar(Aluguel aluguel) {
+    public void atrasar(Aluguel aluguel, int diasAtraso) {
+        if (diasAtraso <= 0) {
+            System.out.println("Informe uma quantidade de dias válida.");
+            return;
+        }
+
+        aluguel.setDiasAtraso(diasAtraso);
         aluguel.setEstado(new EstadoAtrasado());
-        System.out.println("   [State] Aluguel marcado como ATRASADO (multa de R$ 5,00/dia).");
+
+        System.out.println("   [State] Aluguel marcado como ATRASADO.");
     }
 
     @Override
