@@ -87,7 +87,15 @@ public class Main {
 
     private static void cadastrarJogo() {
         System.out.println("--- CADASTRAR JOGO (Factory Method) ---");
+
         int tipo = lerInteiro("Tipo (1 - Físico | 2 - Digital): ");
+
+        // Valida o tipo de jogo
+        if (tipo != 1 && tipo != 2) {
+            System.out.println("Tipo inválido! Escolha 1 para Físico ou 2 para Digital.");
+            return;
+        }
+
         String titulo = lerTexto("Título: ");
         String genero = lerTexto("Gênero: ");
         double preco = lerDouble("Preço base (R$/dia): ");
@@ -95,6 +103,7 @@ public class Main {
 
         FabricaJogo fabrica;
         int copias = 0;
+
         if (tipo == 1) {
             fabrica = new FabricaJogoFisico();
             copias = lerInteiro("Quantidade de cópias: ");
@@ -102,9 +111,13 @@ public class Main {
             fabrica = new FabricaJogoDigital();
         }
 
-        Jogo jogo = fabrica.criarJogo(new DadosJogo(titulo, genero, preco, classificacao, copias));
+        Jogo jogo = fabrica.criarJogo(
+            new DadosJogo(titulo, genero, preco, classificacao, copias)
+        );
+
         locadora.adicionarJogo(jogo);
         System.out.println("Jogo adicionado ao catálogo.");
+        
     }
 
     private static void listarJogos() {

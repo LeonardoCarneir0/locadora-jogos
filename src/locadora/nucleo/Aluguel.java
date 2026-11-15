@@ -43,10 +43,6 @@ public class Aluguel {
         estado.devolver(this);
     }
 
-    public void atrasar() {
-        estado.atrasar(this);
-    }
-
     public void setEstado(EstadoAluguel estado) {
         this.estado = estado;
     }
