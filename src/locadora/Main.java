@@ -195,7 +195,7 @@ public class Main {
     private static void devolverAluguel() {
         Aluguel aluguel = selecionarAluguel();
         if (aluguel != null) {
-            aluguel.devolver();
+            locadora.devolverAluguel(aluguel);
         }
     }
 
