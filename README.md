@@ -8,9 +8,19 @@
 ![Padrões](https://img.shields.io/badge/padrões-4-blueviolet?style=flat)
 ![Status](https://img.shields.io/badge/status-concluído-success?style=flat)
 
-Projeto da disciplina **Programação III** — um sistema real de aluguel de jogos
-com cadastro, aluguel com extras, bloqueio de jogos +18 e controle do ciclo de
-vida do aluguel.
+Projeto da disciplina **Programação III** — um sistema real de aluguel de jogos.
+
+---
+
+## ✨ Funcionalidades
+
+- 🎮 **Cadastro de jogos** físicos (com estoque de cópias) ou digitais (com código)
+- 🛒 **Aluguel** com extras opcionais (segundo controle, seguro, entrega)
+- 🔞 **Controle de acesso** por classificação indicativa (bloqueia jogos +10, +18…)
+- 📦 **Controle de estoque** de cópias físicas (retira ao alugar, repõe ao devolver)
+- 💸 **Multa por atraso** calculada pelos dias de atraso (R$ 5,00/dia)
+- 🔁 **Ciclo de vida do aluguel** (Alugado → Atrasado → Devolvido)
+- 🛡️ **Validações** de entrada (dados inválidos não derrubam o programa)
 
 ---
 
@@ -59,10 +69,12 @@ cópias) e `FabricaJogoDigital` cria `JogoDigital` (com código de ativação).
 Para adicionar um novo tipo de jogo, basta criar **uma nova fábrica**, sem
 alterar o código existente.
 
-**2. State** — a interface `EstadoAluguel` define `devolver()` e `atrasar()`.
-`EstadoAlugado`, `EstadoAtrasado` e `EstadoDevolvido` implementam o
-comportamento de cada estado. A classe `Aluguel` (contexto) delega as ações
-ao estado atual — a devolução com atraso, por exemplo, cobra multa.
+**2. State** — a interface `EstadoAluguel` define `devolver()` e
+`atrasar(int diasAtraso)`. `EstadoAlugado`, `EstadoAtrasado` e
+`EstadoDevolvido` implementam o comportamento de cada estado. O contexto
+`Aluguel` delega as ações ao estado atual: ao atrasar, guarda os `diasAtraso`;
+ao devolver em estado `ATRASADO`, calcula a multa (`diasAtraso × R$ 5,00`) e
+soma ao preço final.
 
 **3. Decorator** — `Contrato` define `calcularPreco()` e `getDescricao()`.
 `ContratoBasico` é o aluguel puro; `DecoradorContrato` (abstrato) embrulha um
@@ -70,10 +82,10 @@ ao estado atual — a devolução com atraso, por exemplo, cobra multa.
 somam valores e podem ser **combinados em cadeia**.
 
 **4. Proxy** — `ServicoLocadora` define `alugar(...)`. `Locadora` (Real
-Subject) executa o aluguel; `LocadoraProxy` compara a **idade** do cliente
-com a **classificação indicativa** do jogo e bloqueia se o cliente for mais
-novo (ex.: jogo 10+ para uma criança de 6 anos, ou jogo 18+ para um jovem de
-15 anos).
+Subject) executa o aluguel (com validações e controle de estoque);
+`LocadoraProxy` compara a **idade** do cliente com a **classificação
+indicativa** do jogo e bloqueia se o cliente for mais novo (ex.: jogo 10+ para
+uma criança de 6 anos, ou 18+ para um jovem de 15 anos).
 
 ---
 
@@ -86,11 +98,11 @@ locadora-jogos/
 ├── PADROES.md                   # classificação e justificativa dos padrões
 └── src/locadora/
     ├── Main.java                # menu em console
-    ├── modelo/                  # produtos (Factory Method)
+    ├── modelo/                  # produtos (Factory Method) + estoque
     ├── fabrica/                 # creators (Factory Method)
     ├── estado/                  # State
     ├── contrato/                # Decorator
-    ├── servico/                 # Proxy
+    ├── servico/                 # Proxy (Locadora + LocadoraProxy)
     └── nucleo/Aluguel.java      # contexto (State) + cliente (Decorator)
 ```
 
@@ -104,8 +116,11 @@ locadora-jogos/
    **bloqueia**.
 3. **Decorator** — opção `3`: alugue um jogo escolhendo extras (segundo
    controle, seguro, entrega) → o preço soma os extras.
-4. **State** — opções `5` e `6`: simule atraso e depois devolva → repare na
-   multa (R$ 5,00/dia) e na mudança de estado.
+4. **Estoque** — opção `3`: alugue todas as cópias de um jogo físico e tente
+   alugar de novo → o sistema avisa **"Não existem cópias disponíveis"**.
+5. **State** — opção `5`: simule um atraso (informando os dias) e depois use a
+   opção `6` para devolver → repare na **multa** (`dias × R$ 5,00`) e na
+   mudança de estado.
 
 ---
 

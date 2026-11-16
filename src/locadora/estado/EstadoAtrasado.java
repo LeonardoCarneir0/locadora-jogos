@@ -1,8 +1,10 @@
-
 package locadora.estado;
 
 import locadora.nucleo.Aluguel;
 
+/**
+ * Estado "ATRASADO": o prazo foi excedido e há multa por dia de atraso.
+ */
 public class EstadoAtrasado implements EstadoAluguel {
 
     private static final double MULTA_POR_DIA = 5.0;
@@ -14,10 +16,7 @@ public class EstadoAtrasado implements EstadoAluguel {
         aluguel.registrarMulta(multa);
         aluguel.setEstado(new EstadoDevolvido());
 
-        System.out.printf(
-            "   [State] Devolução realizada! Multa: R$ %.2f%n",
-            multa
-        );
+        System.out.printf("   [State] Devolução realizada! Multa: R$ %.2f%n", multa);
     }
 
     @Override

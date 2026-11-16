@@ -62,6 +62,7 @@ public class Aluguel {
     public String getEstado() {
         return estado.getNome();
     }
+
     public void atrasar(int diasAtraso) {
         estado.atrasar(this, diasAtraso);
     }
@@ -81,7 +82,7 @@ public class Aluguel {
     public double getMulta() {
         return multa;
     }
-    
+
     @Override
     public String toString() {
         return String.format("%-12s -> %-22s | %2d dia(s) | %-9s | R$ %6.2f | %s",

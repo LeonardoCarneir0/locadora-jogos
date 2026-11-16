@@ -45,10 +45,12 @@ projeto:
 ### 2. State — Classe A
 - **Onde:** `EstadoAluguel` (interface) + `EstadoAlugado`, `EstadoAtrasado` e
   `EstadoDevolvido` (estados concretos). Contexto: `Aluguel`.
-- **Como funciona:** as ações `devolver()` e `atrasar()` mudam de comportamento
-  conforme o estado atual. O próprio estado troca o estado do aluguel.
-- **Por que está "completo":** o ciclo inteiro é modelado:
-  `ALUGADO → ATRASADO → DEVOLVIDO`, com multa na devolução atrasada.
+- **Como funciona:** as ações `devolver()` e `atrasar(int diasAtraso)` mudam de
+  comportamento conforme o estado atual. O próprio estado troca o estado do
+  aluguel e guarda os dias de atraso.
+- **Por que está "completo":** o ciclo inteiro é modelado
+  (`ALUGADO → ATRASADO → DEVOLVIDO`), e a multa da devolução atrasada é
+  calculada pelos dias de atraso (`diasAtraso × R$ 5,00`).
 
 ### 3. Decorator — Classe B
 - **Onde:** `Contrato` (interface) + `ContratoBasico` (componente) +

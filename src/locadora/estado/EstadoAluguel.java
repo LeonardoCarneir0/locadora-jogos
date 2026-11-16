@@ -1,11 +1,12 @@
 package locadora.estado;
 
 import locadora.nucleo.Aluguel;
+
 /**
  * Interface do padrão State.
  *
  * Cada estado do aluguel implementa o comportamento das ações
- * {@link #devolver(Aluguel)} e {@link #atrasar(Aluguel)}.
+ * {@link #devolver(Aluguel)} e {@link #atrasar(Aluguel, int)}.
  */
 public interface EstadoAluguel {
 

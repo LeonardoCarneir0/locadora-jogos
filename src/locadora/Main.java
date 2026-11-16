@@ -137,13 +137,15 @@ public class Main {
             fabrica = new FabricaJogoDigital();
         }
 
-        Jogo jogo = fabrica.criarJogo(
-            new DadosJogo(titulo, genero, preco, classificacao, copias)
-        );
-
-        locadora.adicionarJogo(jogo);
-        System.out.println("Jogo adicionado ao catálogo.");
-        
+        try {
+            Jogo jogo = fabrica.criarJogo(
+                new DadosJogo(titulo, genero, preco, classificacao, copias)
+            );
+            locadora.adicionarJogo(jogo);
+            System.out.println("Jogo adicionado ao catálogo.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Não foi possível cadastrar: " + e.getMessage());
+        }
     }
 
     private static void listarJogos() {
@@ -179,9 +181,13 @@ public class Main {
 
         Contrato contrato = montarContrato(jogo, dias);
 
-        Aluguel aluguel = servico.alugar(cliente, idade, jogo, dias, contrato);
-        if (aluguel != null) {
-            System.out.printf("Aluguel registrado! Total: R$ %.2f%n", aluguel.calcularPreco());
+        try {
+            Aluguel aluguel = servico.alugar(cliente, idade, jogo, dias, contrato);
+            if (aluguel != null) {
+                System.out.printf("Aluguel registrado! Total: R$ %.2f%n", aluguel.calcularPreco());
+            }
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("Não foi possível alugar: " + e.getMessage());
         }
     }
 
